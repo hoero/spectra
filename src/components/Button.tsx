@@ -153,7 +153,47 @@ function Button({
     const btnOptions = defaultBtnArgs(options.theme, options.onPress);
     return (
         <Btn
+            attributes={[Border.rounded(radius.default), ...attributes]}
+            options={{ ...btnOptions, device: options.device }}
+        >
+            {children}
+        </Btn>
+    );
+}
+
+function ButtonSquare({
+    attributes,
+    options,
+    children,
+}: {
+    attributes: Data.Attribute[];
+    options: DefaultButtonArgs;
+    children: preact.ComponentChild;
+}): preact.JSX.Element {
+    const btnOptions = defaultBtnArgs(options.theme, options.onPress);
+    return (
+        <Btn
             attributes={attributes}
+            options={{ ...btnOptions, device: options.device }}
+        >
+            {children}
+        </Btn>
+    );
+}
+
+function ButtonRound({
+    attributes,
+    options,
+    children,
+}: {
+    attributes: Data.Attribute[];
+    options: DefaultButtonArgs;
+    children: preact.ComponentChild;
+}): preact.JSX.Element {
+    const btnOptions = defaultBtnArgs(options.theme, options.onPress);
+    return (
+        <Btn
+            attributes={[Border.rounded(radius.rounded), ...attributes]}
             options={{ ...btnOptions, device: options.device }}
         >
             {children}
@@ -273,14 +313,17 @@ function attributes_(
 ) {
     return [
         paddingXY(
-            rem(space.md),
             Rem.rrems(device, {
                 ...Responsive.breakpoints,
-                default: 1.3,
-                phone: 2.2,
+                default: space.md,
+                phone: space.xl,
+            }),
+            Rem.rrems(device, {
+                ...Responsive.breakpoints,
+                default: 1.15,
+                phone: space.lg,
             })
         ),
-        Border.rounded(radius.default),
         Font.semiBold,
         Font.variant(Font.smallCaps),
         Font.color(theme.button.color),
@@ -297,7 +340,7 @@ function focusHover(attributes: Data.Attribute[]) {
 }
 
 function active(attributes: Data.Attribute[]) {
-    return [moveDown(1), ...attributes];
+    return [moveDown(1), Border.shadows(Tokens.shadows.down), ...attributes];
 }
 
 function Btn({
@@ -345,4 +388,4 @@ function Btn({
     }
 }
 
-export { Button, ButtonAnchor, ButtonSecondary, xs };
+export { Button, ButtonAnchor, ButtonSecondary, ButtonRound, ButtonSquare };

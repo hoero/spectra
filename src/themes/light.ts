@@ -38,7 +38,10 @@ const color: Colors = {
  * Button
  */
 
-const button: Button = { color: light.white, background: light.grey.grey30 };
+const button: Button = {
+    color: light.white,
+    background: { ...light.white, lightness: 16 },
+};
 
 /**
  * Form
