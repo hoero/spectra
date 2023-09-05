@@ -2,6 +2,8 @@
     "imports": {
         "preact": "https://esm.sh/preact@10.15.1",
         "preact/": "https://esm.sh/preact@10.15.1/",
+        "preact/jsx-runtime": "https://esm.sh/preact@10.15.1/jsx-runtime?dts",
+        "preact/jsx-dev-runtime": "https://esm.sh/preact@10.15.1/jsx-dev-runtime?dts",
         "$std/": "https://deno.land/std@0.193.0/",
         "espectros": "https://deno.land/x/espectro@0.0.4/mod.ts",
         "espectro": "../espectro/mod.ts",
@@ -12,5 +14,8 @@
         "jsx": "react-jsx",
         "jsxImportSource": "preact",
         "strict": true
+    },
+    "tasks": {
+        "dev": "deno run --watch mod.ts"
     }
 }

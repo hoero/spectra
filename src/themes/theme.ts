@@ -3,6 +3,7 @@ import Dark from './dark.ts';
 import {
     Colors,
     Dropdown,
+    Button,
     Form,
     Header,
     Nav,
@@ -21,6 +22,7 @@ export enum Theme {
 
 export interface Theming {
     color: Colors;
+    button: Button;
     dropdown: Dropdown;
     form: Form;
     grey: Grey;
@@ -36,9 +38,10 @@ function theming(theme: Theme): Theming {
         case Theme.Dark:
             return {
                 color: Dark.color,
+                button: Dark.button,
                 dropdown: Dark.dropdown,
                 form: Dark.form,
-                grey: grey,
+                grey,
                 header: Dark.header,
                 nav: Dark.nav,
                 table: Dark.table,
@@ -50,6 +53,7 @@ function theming(theme: Theme): Theming {
         default:
             return {
                 color: Light.color,
+                button: Light.button,
                 dropdown: Light.dropdown,
                 form: Light.form,
                 grey: neutral,

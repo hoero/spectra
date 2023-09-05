@@ -14,11 +14,13 @@ import { Maybe } from 'elmish';
 import { space } from '../tokens/spacing.ts';
 import { radius, noShadow } from '../tokens/tokens.ts';
 import { Colors } from '../tokens/color.ts';
+import { Tokens } from '../../mod.ts';
 
 const { DeviceClass, Orientation, Device } = Responsive,
     { Nothing } = Maybe,
     { paddingXY, focused, rem, moveDown, moveUp, mouseDown, mouseOver } =
-        Element;
+        Element,
+    { shadow } = Border;
 
 export enum Type {
     Anchor,
@@ -147,7 +149,7 @@ function Button({
     attributes: Data.Attribute[];
     options: DefaultButtonArgs;
     children: preact.ComponentChild;
-}) {
+}): preact.JSX.Element {
     const btnOptions = defaultBtnArgs(options.theme, options.onPress);
     return (
         <Btn
@@ -281,7 +283,8 @@ function attributes_(
         Border.rounded(radius.default),
         Font.semiBold,
         Font.variant(Font.smallCaps),
-        Font.color(theme.color.text),
+        Font.color(theme.button.color),
+        Background.color(theme.button.background),
         mouseDown(active([])),
         mouseOver(focusHover([])),
         focused(focusHover([])),
@@ -290,7 +293,7 @@ function attributes_(
 }
 
 function focusHover(attributes: Data.Attribute[]) {
-    return [moveUp(1), ...attributes];
+    return [moveUp(1), Border.shadows(Tokens.shadows.up), ...attributes];
 }
 
 function active(attributes: Data.Attribute[]) {
@@ -305,7 +308,7 @@ function Btn({
     attributes: Data.Attribute[];
     options: ButtonArgs;
     children: preact.ComponentChild;
-}) {
+}): preact.JSX.Element {
     switch (options.type) {
         case Type.Anchor:
             return (
@@ -317,7 +320,9 @@ function Btn({
                     )}
                     url={options.url}
                 >
-                    {children}
+                    {typeof children === 'string'
+                        ? children.toLowerCase()
+                        : children}
                 </ElementJsx.Link>
             );
 
@@ -332,8 +337,12 @@ function Btn({
                     )}
                     onPress={options.onPress}
                 >
-                    {children}
+                    {typeof children === 'string'
+                        ? children.toLowerCase()
+                        : children}
                 </InputJsx.Button>
             );
     }
 }
+
+export { Button, ButtonAnchor, ButtonSecondary, xs };

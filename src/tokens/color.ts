@@ -12,6 +12,11 @@ export interface Colors {
     gradient: { c1: Data.Hsla; c2: Data.Hsla };
 }
 
+export interface Button {
+    color: Data.Hsla;
+    background: Data.Hsla;
+}
+
 export interface Dropdown {
     background: Data.Hsla;
     border: Data.Hsla;

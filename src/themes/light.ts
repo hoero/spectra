@@ -8,6 +8,7 @@ import {
     Tag,
     Tooltip,
     light,
+    Button,
 } from '../tokens/color.ts';
 import { Color, Data } from 'espectro';
 import { radius } from '../tokens/tokens.ts';
@@ -21,7 +22,7 @@ const border: Data.Hsla = { ...light.white, lightness: 0, alpha: 0.1 };
  * Color
  */
 
-const text = light.grey.grey30;
+const text = { ...light.white, lightness: 16 };
 
 const color: Colors = {
     primary: light.grey.grey30,
@@ -32,6 +33,12 @@ const color: Colors = {
     bodyBackground: light.white,
     gradient: { c1: light.white, c2: light.grey.grey96 },
 };
+
+/**
+ * Button
+ */
+
+const button: Button = { color: light.white, background: light.grey.grey30 };
 
 /**
  * Form
@@ -108,4 +115,14 @@ const tag: Tag = { color: light.white, background: light.grey.grey30 };
  */
 const tooltip: Tooltip = { color: light.white, background: light.grey.grey30 };
 
-export default { color, dropdown, form, header, nav, table, tag, tooltip };
+export default {
+    color,
+    button,
+    dropdown,
+    form,
+    header,
+    nav,
+    table,
+    tag,
+    tooltip,
+};

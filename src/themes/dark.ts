@@ -8,6 +8,7 @@ import {
     Tag,
     Tooltip,
     light,
+    Button,
 } from '../tokens/color.ts';
 import { Data } from 'espectro';
 import Light from './light.ts';
@@ -27,6 +28,15 @@ const color: Colors = {
     textTertiary: { ...light.white, alpha: 0.4 },
     bodyBackground: light.grey.grey5,
     gradient: { c1: light.grey.grey10, c2: light.grey.grey10 },
+};
+
+/**
+ * Button
+ */
+
+const button: Button = {
+    color: { ...light.white, lightness: 16 },
+    background: light.white,
 };
 
 /**
@@ -96,11 +106,27 @@ const table: Table = {
  * Tag
  */
 
-const tag: Tag = { color: light.grey.grey10, background: light.white };
+const tag: Tag = {
+    color: { ...light.white, lightness: 16 },
+    background: light.white,
+};
 
 /**
  * Tooltip
  */
-const tooltip: Tooltip = { color: light.grey.grey10, background: light.white };
+const tooltip: Tooltip = {
+    color: { ...light.white, lightness: 16 },
+    background: light.white,
+};
 
-export default { color, dropdown, form, header, nav, table, tag, tooltip };
+export default {
+    color,
+    dropdown,
+    form,
+    header,
+    nav,
+    table,
+    tag,
+    tooltip,
+    button,
+};
