@@ -37,6 +37,7 @@ const color: Colors = {
 const button: Button = {
     color: { ...light.white, lightness: 16 },
     background: light.white,
+    focus: { ...light.white, lightness: 40 },
 };
 
 /**

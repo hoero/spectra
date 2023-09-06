@@ -19,8 +19,7 @@ import { Tokens } from '../../mod.ts';
 const { DeviceClass, Orientation, Device } = Responsive,
     { Nothing } = Maybe,
     { paddingXY, focused, rem, moveDown, moveUp, mouseDown, mouseOver } =
-        Element,
-    { shadow } = Border;
+        Element;
 
 export enum Type {
     Anchor,
@@ -315,22 +314,24 @@ function attributes_(
         paddingXY(
             Rem.rrems(device, {
                 ...Responsive.breakpoints,
-                default: space.md,
-                phone: space.xl,
+                default: space.md - 0.3,
+                phone: space.xl - 0.3,
             }),
             Rem.rrems(device, {
                 ...Responsive.breakpoints,
-                default: 1.15,
-                phone: space.lg,
+                default: 1.15 - 0.3,
+                phone: space.lg - 0.3,
             })
         ),
         Font.semiBold,
         Font.variant(Font.smallCaps),
         Font.color(theme.button.color),
         Background.color(theme.button.background),
+        Border.width(3),
+        Border.color({ ...theme.button.focus, alpha: 0 }),
         mouseDown(active([])),
         mouseOver(focusHover([])),
-        focused(focusHover([])),
+        focused(focusHover([Border.color(theme.button.focus)])),
         ...attributes,
     ];
 }

@@ -1,6 +1,6 @@
 import { Color, Data } from 'espectro';
 
-const { hsl } = Color;
+const { hsla } = Color;
 
 export interface Colors {
     primary: Data.Hsla;
@@ -15,6 +15,7 @@ export interface Colors {
 export interface Button {
     color: Data.Hsla;
     background: Data.Hsla;
+    focus: Data.Hsla;
 }
 
 export interface Dropdown {
@@ -87,10 +88,10 @@ export interface Grey {
 
 // Notifications
 
-const vermilion = hsl(5, 76, 55),
-    bluishGreen = hsl(164, 100, 31),
-    skyBlue = hsl(202, 77, 63),
-    orange = hsl(41, 100, 45);
+const vermilion = hsla(5, 76, 55, 1),
+    bluishGreen = hsla(164, 100, 31, 1),
+    skyBlue = hsla(202, 77, 63, 1),
+    orange = hsla(41, 100, 45, 1);
 
 const status = {
     success: bluishGreen,
@@ -101,7 +102,7 @@ const status = {
 
 // Black, white and greys
 
-const white = hsl(0, 0, 100);
+const white = hsla(0, 0, 100, 1);
 
 const neutral: Grey = {
     grey5: { ...white, lightness: 5 },
