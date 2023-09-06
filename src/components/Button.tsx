@@ -224,16 +224,18 @@ function ButtonAnchor({
     );
 }
 
-function secondaryAttr(color: Colors) {
+function secondaryAttr(theme: Theming) {
     return [
-        Font.color(color.secondary),
-        mouseDown([Background.color({ ...color.secondary, alpha: 0.16 })]),
-        mouseOver(focusHover(secondaryFocusHover(color))),
-        focused(focusHover(secondaryFocusHover(color))),
+        Font.color(theme.color.secondary),
+        mouseDown([
+            Background.color({ ...theme.color.secondary, alpha: 0.16 }),
+        ]),
+        mouseOver(hover(secondaryHover(theme.color))),
+        focused(focus(theme, [])),
     ];
 }
 
-function secondaryFocusHover(color: Colors) {
+function secondaryHover(color: Colors) {
     return [
         Background.color({ ...color.secondary, alpha: 0.04 }),
         Border.shadow(noShadow),
@@ -252,7 +254,7 @@ function ButtonSecondary({
     const btnOptions = defaultBtnArgs(options.theme, options.onPress);
     return (
         <Btn
-            attributes={secondaryAttr(options.theme.color).concat(attributes)}
+            attributes={secondaryAttr(options.theme).concat(attributes)}
             options={{ ...btnOptions, device: options.device }}
         >
             {children}
@@ -314,30 +316,39 @@ function attributes_(
         paddingXY(
             Rem.rrems(device, {
                 ...Responsive.breakpoints,
-                default: space.md - 0.3,
-                phone: space.xl - 0.3,
+                default: space.md,
+                phone: space.xl,
             }),
             Rem.rrems(device, {
                 ...Responsive.breakpoints,
-                default: 1.15 - 0.3,
-                phone: space.lg - 0.3,
+                default: 1.15,
+                phone: space.lg,
             })
         ),
         Font.semiBold,
         Font.variant(Font.smallCaps),
         Font.color(theme.button.color),
         Background.color(theme.button.background),
-        Border.width(3),
-        Border.color({ ...theme.button.focus, alpha: 0 }),
         mouseDown(active([])),
-        mouseOver(focusHover([])),
-        focused(focusHover([Border.color(theme.button.focus)])),
+        mouseOver(hover([])),
+        focused(focus(theme, [])),
         ...attributes,
     ];
 }
 
-function focusHover(attributes: Data.Attribute[]) {
+function hover(attributes: Data.Attribute[]) {
     return [moveUp(1), Border.shadows(Tokens.shadows.up), ...attributes];
+}
+
+function focus(theme: Theming, attributes: Data.Attribute[]) {
+    return [
+        moveUp(1),
+        Border.shadows([
+            Data.Shadow(theme.button.focus, [0, 0], 0, 3),
+            ...Tokens.shadows.up,
+        ]),
+        ...attributes,
+    ];
 }
 
 function active(attributes: Data.Attribute[]) {
