@@ -232,19 +232,8 @@ function ButtonAnchor({
 
 function secondaryAttr(theme: Theming) {
     return [
-        Font.color(theme.color.secondary),
-        mouseDown([
-            Background.color({ ...theme.color.secondary, alpha: 0.16 }),
-        ]),
-        mouseOver(hover(secondaryHover(theme.color))),
-        focused(focus(theme, [])),
-    ];
-}
-
-function secondaryHover(color: Colors) {
-    return [
-        Background.color({ ...color.secondary, alpha: 0.04 }),
-        Border.shadow(noShadow),
+        Font.color(theme.button.background),
+        Background.color({ ...theme.button.background, alpha: 0 }),
     ];
 }
 
@@ -274,6 +263,7 @@ function ghostAttr(theme: Theming) {
     return [
         Font.color(theme.button.background),
         Background.color({ ...theme.button.background, alpha: 0 }),
+        Border.color({ ...theme.button.background, alpha: 0 }),
         mouseDown(ghostActive(theme.button)),
         mouseOver(ghostHover(theme.button)),
         focused(ghostFocus(theme)),
@@ -383,6 +373,8 @@ function attributes_(
         ),
         Font.color(theme.button.color),
         Background.color(theme.button.background),
+        Border.width(1),
+        Border.color(theme.button.background),
         mouseDown(active([])),
         mouseOver(hover([])),
         focused(focus(theme, [])),
