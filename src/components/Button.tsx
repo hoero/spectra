@@ -149,7 +149,7 @@ function Button({
     attributes: Data.Attribute[];
     options: DefaultButtonArgs;
     children: preact.ComponentChild;
-}): preact.JSX.Element {
+}) {
     const btnOptions = defaultBtnArgs(options.theme, options.onPress);
     return (
         <Btn
@@ -169,7 +169,7 @@ function ButtonSquare({
     attributes: Data.Attribute[];
     options: DefaultButtonArgs;
     children: preact.ComponentChild;
-}): preact.JSX.Element {
+}) {
     const btnOptions = defaultBtnArgs(options.theme, options.onPress);
     return (
         <Btn
@@ -189,7 +189,7 @@ function ButtonRound({
     attributes: Data.Attribute[];
     options: DefaultButtonArgs;
     children: preact.ComponentChild;
-}): preact.JSX.Element {
+}) {
     const btnOptions = defaultBtnArgs(options.theme, options.onPress);
     return (
         <Btn
@@ -326,9 +326,6 @@ function attributes_(
                 phone: space.lg,
             })
         ),
-        Font.semiBold,
-        Font.size(rem(font.size.scaled2x)),
-        Font.variant(Font.smallCaps),
         Font.color(theme.button.color),
         Background.color(theme.button.background),
         mouseDown(active([])),
@@ -365,7 +362,7 @@ function Btn({
     attributes: Data.Attribute[];
     options: ButtonArgs;
     children: preact.ComponentChild;
-}): preact.JSX.Element {
+}) {
     switch (options.type) {
         case Type.Anchor:
             return (
@@ -377,9 +374,7 @@ function Btn({
                     )}
                     url={options.url}
                 >
-                    {typeof children === 'string'
-                        ? children.toLowerCase()
-                        : children}
+                    {children}
                 </ElementJsx.Link>
             );
 
@@ -394,9 +389,7 @@ function Btn({
                     )}
                     onPress={options.onPress}
                 >
-                    {typeof children === 'string'
-                        ? children.toLowerCase()
-                        : children}
+                    {children}
                 </InputJsx.Button>
             );
     }
