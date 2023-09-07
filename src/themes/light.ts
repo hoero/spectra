@@ -9,6 +9,7 @@ import {
     Tooltip,
     light,
     Button,
+    Link,
 } from '../tokens/color.ts';
 import { Color, Data } from 'espectro';
 import { radius } from '../tokens/tokens.ts';
@@ -31,6 +32,7 @@ const color: Colors = {
     textSecondary: { ...text, alpha: 0.7 },
     textTertiary: { ...text, alpha: 0.4 },
     bodyBackground: light.white,
+    focus: { ...light.white, lightness: 60 },
     gradient: { c1: light.white, c2: light.grey.grey96 },
 };
 
@@ -41,7 +43,14 @@ const color: Colors = {
 const button: Button = {
     color: light.white,
     background: { ...light.white, lightness: 16 },
-    focus: { ...light.white, lightness: 60 },
+};
+
+/**
+ * Link
+ */
+
+const link: Link = {
+    color: text,
 };
 
 /**
@@ -129,4 +138,5 @@ export default {
     table,
     tag,
     tooltip,
+    link,
 };

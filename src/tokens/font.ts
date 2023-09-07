@@ -3,9 +3,18 @@ import { Font, Responsive, Data, Element, Rem } from 'espectro';
 const { breakpoints } = Responsive,
     { spacing } = Element,
     { size } = Font,
-    { rpts, unitless } = Rem;
+    { rpts, unitless, scaled } = Rem;
 
 const headings: Data.Attribute[] = [Font.bold];
+
+const font = {
+    size: {
+        base: scaled(1),
+        scaled2x: scaled(2),
+        scaled3x: scaled(3),
+        scaled4x: scaled(4),
+    },
+};
 
 function h1(device: Responsive.Device): Data.Attribute[] {
     return [
@@ -40,4 +49,4 @@ function h6(device: Responsive.Device): Data.Attribute[] {
     return [size(rpts(device, { ...breakpoints, default: 0.8, phone: 1 }))];
 }
 
-export { h1, h2, h3, h4, h5, h6, headings };
+export { h1, h2, h3, h4, h5, h6, headings, font };

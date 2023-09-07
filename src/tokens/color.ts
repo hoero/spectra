@@ -9,13 +9,13 @@ export interface Colors {
     textSecondary: Data.Hsla;
     textTertiary: Data.Hsla;
     bodyBackground: Data.Hsla;
+    focus: Data.Hsla;
     gradient: { c1: Data.Hsla; c2: Data.Hsla };
 }
 
 export interface Button {
     color: Data.Hsla;
     background: Data.Hsla;
-    focus: Data.Hsla;
 }
 
 export interface Dropdown {
@@ -39,6 +39,10 @@ export interface Form {
 export interface Header {
     background: Data.Hsla;
     border: Data.Hsla;
+}
+
+export interface Link {
+    color: Data.Hsla;
 }
 
 export interface Nav {

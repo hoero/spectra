@@ -13,6 +13,7 @@ import {
     Grey,
     grey,
     neutral,
+    Link,
 } from '../tokens/color.ts';
 
 export enum Theme {
@@ -23,6 +24,7 @@ export enum Theme {
 export interface Theming {
     color: Colors;
     button: Button;
+    link: Link;
     dropdown: Dropdown;
     form: Form;
     grey: Grey;
@@ -39,6 +41,7 @@ function theming(theme: Theme): Theming {
             return {
                 color: Dark.color,
                 button: Dark.button,
+                link: Dark.link,
                 dropdown: Dark.dropdown,
                 form: Dark.form,
                 grey,
@@ -54,6 +57,7 @@ function theming(theme: Theme): Theming {
             return {
                 color: Light.color,
                 button: Light.button,
+                link: Light.link,
                 dropdown: Light.dropdown,
                 form: Light.form,
                 grey: neutral,

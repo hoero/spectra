@@ -15,6 +15,7 @@ import { space } from '../tokens/spacing.ts';
 import { radius, noShadow } from '../tokens/tokens.ts';
 import { Colors } from '../tokens/color.ts';
 import { Tokens } from '../../mod.ts';
+import { font } from '../tokens/font.ts';
 
 const { DeviceClass, Orientation, Device } = Responsive,
     { Nothing } = Maybe,
@@ -326,6 +327,7 @@ function attributes_(
             })
         ),
         Font.semiBold,
+        Font.size(rem(font.size.scaled2x)),
         Font.variant(Font.smallCaps),
         Font.color(theme.button.color),
         Background.color(theme.button.background),
@@ -344,7 +346,7 @@ function focus(theme: Theming, attributes: Data.Attribute[]) {
     return [
         moveUp(1),
         Border.shadows([
-            Data.Shadow(theme.button.focus, [0, 0], 0, 3),
+            Data.Shadow(theme.color.focus, [0, 0], 0, 3),
             ...Tokens.shadows.up,
         ]),
         ...attributes,

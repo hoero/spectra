@@ -9,6 +9,7 @@ import {
     Tooltip,
     light,
     Button,
+    Link,
 } from '../tokens/color.ts';
 import { Data } from 'espectro';
 import Light from './light.ts';
@@ -27,6 +28,7 @@ const color: Colors = {
     textSecondary: { ...light.white, alpha: 0.7 },
     textTertiary: { ...light.white, alpha: 0.4 },
     bodyBackground: light.grey.grey5,
+    focus: { ...light.white, lightness: 40 },
     gradient: { c1: light.grey.grey10, c2: light.grey.grey10 },
 };
 
@@ -37,7 +39,14 @@ const color: Colors = {
 const button: Button = {
     color: { ...light.white, lightness: 16 },
     background: light.white,
-    focus: { ...light.white, lightness: 40 },
+};
+
+/**
+ * Link
+ */
+
+const link: Link = {
+    color: light.white,
 };
 
 /**
@@ -130,4 +139,5 @@ export default {
     tag,
     tooltip,
     button,
+    link,
 };
