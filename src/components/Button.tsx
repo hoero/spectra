@@ -13,9 +13,8 @@ import { Theming } from '../themes/theme.ts';
 import { Maybe } from 'elmish';
 import { space } from '../tokens/spacing.ts';
 import { radius, noShadow } from '../tokens/tokens.ts';
-import { Colors } from '../tokens/color.ts';
+import { Colors, Button } from '../tokens/color.ts';
 import { Tokens } from '../../mod.ts';
-import { font } from '../tokens/font.ts';
 
 const { DeviceClass, Orientation, Device } = Responsive,
     { Nothing } = Maybe,
@@ -141,6 +140,8 @@ function defaultAnchorIconArgs(theme: Theming): ButtonIconArgs {
 
 // Buttons type: button or anchor
 
+// Primary buttons
+
 function Button({
     attributes,
     options,
@@ -201,6 +202,8 @@ function ButtonRound({
     );
 }
 
+// Primary anchor buttons
+
 function ButtonAnchor({
     attributes,
     options,
@@ -224,6 +227,8 @@ function ButtonAnchor({
         </Btn>
     );
 }
+
+// Secondary buttons
 
 function secondaryAttr(theme: Theming) {
     return [
@@ -256,6 +261,56 @@ function ButtonSecondary({
     return (
         <Btn
             attributes={secondaryAttr(options.theme).concat(attributes)}
+            options={{ ...btnOptions, device: options.device }}
+        >
+            {children}
+        </Btn>
+    );
+}
+
+// Ghost buttons
+
+function ghostAttr(theme: Theming) {
+    return [
+        Font.color(theme.button.background),
+        Background.color({ ...theme.button.background, alpha: 0 }),
+        mouseDown(ghostActive(theme.button)),
+        mouseOver(ghostHover(theme.button)),
+        focused(ghostFocus(theme)),
+    ];
+}
+
+function ghostHover(color: Button) {
+    return [
+        Background.color({ ...color.color, alpha: 0.1 }),
+        Border.shadow(noShadow),
+    ];
+}
+
+function ghostFocus(theme: Theming) {
+    return [Border.shadow(Data.Shadow(theme.color.focus, [0, 0], 0, 3))];
+}
+
+function ghostActive(color: Button) {
+    return [
+        Background.color({ ...color.color, alpha: 0.15 }),
+        Border.shadow(noShadow),
+    ];
+}
+
+function ButtonGhost({
+    attributes,
+    options,
+    children,
+}: {
+    attributes: Data.Attribute[];
+    options: DefaultButtonArgs;
+    children: preact.ComponentChild;
+}) {
+    const btnOptions = defaultBtnArgs(options.theme, options.onPress);
+    return (
+        <Btn
+            attributes={ghostAttr(options.theme).concat(attributes)}
             options={{ ...btnOptions, device: options.device }}
         >
             {children}
@@ -395,4 +450,11 @@ function Btn({
     }
 }
 
-export { Button, ButtonAnchor, ButtonSecondary, ButtonRound, ButtonSquare };
+export {
+    Button,
+    ButtonAnchor,
+    ButtonSecondary,
+    ButtonRound,
+    ButtonSquare,
+    ButtonGhost,
+};
