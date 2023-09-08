@@ -9,12 +9,13 @@ import {
     Responsive,
     Rem,
 } from 'espectro';
-import { Theming } from '../themes/theme.ts';
 import { Maybe } from 'elmish';
+
+import { Theming } from '../themes/theme.ts';
 import { space } from '../tokens/spacing.ts';
 import { radius, noShadow } from '../tokens/tokens.ts';
 import { Colors, Button } from '../tokens/color.ts';
-import { Tokens } from '../../mod.ts';
+import { shadows } from '../tokens/tokens.ts';
 
 const { DeviceClass, Orientation, Device } = Responsive,
     { Nothing } = Maybe,
@@ -138,6 +139,9 @@ function defaultAnchorIconArgs(theme: Theming): ButtonIconArgs {
     );
 }
 
+// Size
+const size = { xs: paddingXY(rem(0.6), rem(space.xs)) };
+
 // Buttons type: button or anchor
 
 // Primary buttons
@@ -154,47 +158,7 @@ function Button({
     const btnOptions = defaultBtnArgs(options.theme, options.onPress);
     return (
         <Btn
-            attributes={[Border.rounded(radius.default), ...attributes]}
-            options={{ ...btnOptions, device: options.device }}
-        >
-            {children}
-        </Btn>
-    );
-}
-
-function ButtonSquare({
-    attributes,
-    options,
-    children,
-}: {
-    attributes: Data.Attribute[];
-    options: DefaultButtonArgs;
-    children: preact.ComponentChild;
-}) {
-    const btnOptions = defaultBtnArgs(options.theme, options.onPress);
-    return (
-        <Btn
             attributes={attributes}
-            options={{ ...btnOptions, device: options.device }}
-        >
-            {children}
-        </Btn>
-    );
-}
-
-function ButtonRound({
-    attributes,
-    options,
-    children,
-}: {
-    attributes: Data.Attribute[];
-    options: DefaultButtonArgs;
-    children: preact.ComponentChild;
-}) {
-    const btnOptions = defaultBtnArgs(options.theme, options.onPress);
-    return (
-        <Btn
-            attributes={[Border.rounded(radius.rounded), ...attributes]}
             options={{ ...btnOptions, device: options.device }}
         >
             {children}
@@ -308,9 +272,6 @@ function ButtonGhost({
     );
 }
 
-// Size
-const xs = paddingXY(rem(0.6), rem(space.xs));
-
 // Core components
 
 interface ButtonArgs {
@@ -375,6 +336,7 @@ function attributes_(
         Background.color(theme.button.background),
         Border.width(1),
         Border.color(theme.button.background),
+        Border.rounded(theme.button.radius),
         mouseDown(active([])),
         mouseOver(hover([])),
         focused(focus(theme, [])),
@@ -383,7 +345,7 @@ function attributes_(
 }
 
 function hover(attributes: Data.Attribute[]) {
-    return [moveUp(1), Border.shadows(Tokens.shadows.up), ...attributes];
+    return [moveUp(1), Border.shadows(shadows.up), ...attributes];
 }
 
 function focus(theme: Theming, attributes: Data.Attribute[]) {
@@ -391,14 +353,14 @@ function focus(theme: Theming, attributes: Data.Attribute[]) {
         moveUp(1),
         Border.shadows([
             Data.Shadow(theme.color.focus, [0, 0], 0, 3),
-            ...Tokens.shadows.up,
+            ...shadows.up,
         ]),
         ...attributes,
     ];
 }
 
 function active(attributes: Data.Attribute[]) {
-    return [moveDown(1), Border.shadows(Tokens.shadows.down), ...attributes];
+    return [moveDown(1), Border.shadows(shadows.down), ...attributes];
 }
 
 function Btn({
@@ -442,11 +404,4 @@ function Btn({
     }
 }
 
-export {
-    Button,
-    ButtonAnchor,
-    ButtonSecondary,
-    ButtonRound,
-    ButtonSquare,
-    ButtonGhost,
-};
+export { Button, ButtonAnchor, ButtonSecondary, ButtonGhost, size };
