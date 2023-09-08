@@ -17,7 +17,6 @@ import { space } from '../tokens/spacing.ts';
 
 // TODO:
 // const {
-//     Multiline,
 //     Placeholder,
 //     Search,
 //     SpellChecked,
@@ -31,7 +30,7 @@ export interface InputArgs {
     theme: Theming;
     onChange: (text: string) => void;
     text: string;
-    placeholder?: Maybe.Maybe<InputJsx.Placeholder>;
+    placeholder?: InputJsx.Placeholder;
     label: InputJsx.Label;
     message?: string;
     errorMessage?: string;
@@ -42,7 +41,7 @@ export interface InputPasswordArgs {
     theme: Theming;
     onChange: (text: string) => void;
     text: string;
-    placeholder?: Maybe.Maybe<InputJsx.Placeholder>;
+    placeholder?: InputJsx.Placeholder;
     label: InputJsx.Label;
     show: boolean;
     message?: string;
@@ -257,13 +256,13 @@ function CurrentPassword({
 
 function customOptions(options: {
     theme: Theming;
-    placeholder?: Maybe.Maybe<InputJsx.Placeholder>;
+    placeholder?: InputJsx.Placeholder;
     label: InputJsx.Label;
     errorMessage?: string;
 }) {
     return {
         placeholder: options.placeholder
-            ? options.placeholder
+            ? Maybe.Just(options.placeholder)
             : Maybe.Nothing(),
         label:
             options.label.type !== Input.Labels.HiddenLabel &&

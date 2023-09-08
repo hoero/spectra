@@ -13,8 +13,8 @@ import { Maybe } from 'elmish';
 
 import { Theming } from '../themes/theme.ts';
 import { space } from '../tokens/spacing.ts';
-import { radius, noShadow } from '../tokens/tokens.ts';
-import { Colors, Button } from '../tokens/color.ts';
+import { noShadow } from '../tokens/tokens.ts';
+import { Button } from '../tokens/color.ts';
 import { shadows } from '../tokens/tokens.ts';
 
 const { DeviceClass, Orientation, Device } = Responsive,
@@ -30,13 +30,13 @@ export enum Type {
 export interface DefaultButtonArgs {
     device: Responsive.Device;
     theme: Theming;
-    onPress: Data.Maybe<preact.JSX.EventHandler<preact.JSX.TargetedEvent>>;
+    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>;
 }
 
 function DefaultButtonArgs(
     device: Responsive.Device,
     theme: Theming,
-    onPress: Data.Maybe<preact.JSX.EventHandler<preact.JSX.TargetedEvent>>
+    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>
 ) {
     return { device, theme, onPress };
 }
@@ -45,14 +45,14 @@ export interface DefaultButtonIconArgs {
     device: Responsive.Device;
     theme: Theming;
     icon: string;
-    onPress: Data.Maybe<preact.JSX.EventHandler<preact.JSX.TargetedEvent>>;
+    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>;
 }
 
 function DefaultButtonIconArgs(
     device: Responsive.Device,
     theme: Theming,
     icon: string,
-    onPress: Data.Maybe<preact.JSX.EventHandler<preact.JSX.TargetedEvent>>
+    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>
 ) {
     return { device, theme, icon, onPress };
 }
@@ -91,7 +91,7 @@ function DefaultAnchorIconArgs(
 
 function defaultBtnArgs(
     theme: Theming,
-    onPress: Data.Maybe<preact.JSX.EventHandler<preact.JSX.TargetedEvent>>
+    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>
 ): ButtonArgs {
     return ButtonArgs(
         Device(DeviceClass.Desktop, Orientation.Landscape),
@@ -108,13 +108,13 @@ function defaultAnchorArgs(theme: Theming): ButtonArgs {
         theme,
         Type.Anchor,
         '',
-        Nothing()
+        undefined
     );
 }
 
 function defaultBtnIconArgs(
     theme: Theming,
-    onPress: Data.Maybe<preact.JSX.EventHandler<preact.JSX.TargetedEvent>>
+    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>
 ): ButtonIconArgs {
     return ButtonIconArgs(
         Device(DeviceClass.Desktop, Orientation.Landscape),
@@ -135,7 +135,7 @@ function defaultAnchorIconArgs(theme: Theming): ButtonIconArgs {
         '',
         '',
         Nothing(),
-        Nothing()
+        undefined
     );
 }
 
@@ -279,7 +279,7 @@ interface ButtonArgs {
     theme: Theming;
     type: Type;
     url: string;
-    onPress: Data.Maybe<preact.JSX.EventHandler<preact.JSX.TargetedEvent>>;
+    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>;
 }
 
 function ButtonArgs(
@@ -287,7 +287,7 @@ function ButtonArgs(
     theme: Theming,
     type: Type,
     url: string,
-    onPress: Data.Maybe<preact.JSX.EventHandler<preact.JSX.TargetedEvent>>
+    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>
 ) {
     return { device, theme, type, url, onPress };
 }
@@ -298,8 +298,8 @@ interface ButtonIconArgs {
     type: Type;
     url: string;
     icon: string;
-    tooltip: Data.Maybe<unknown>;
-    onPress: Data.Maybe<preact.JSX.EventHandler<preact.JSX.TargetedEvent>>;
+    tooltip?: Data.Maybe<unknown>;
+    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>;
 }
 
 function ButtonIconArgs(
@@ -308,8 +308,8 @@ function ButtonIconArgs(
     type: Type,
     url: string,
     icon: string,
-    tooltip: Data.Maybe<unknown>,
-    onPress: Data.Maybe<preact.JSX.EventHandler<preact.JSX.TargetedEvent>>
+    tooltip?: Data.Maybe<unknown>,
+    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>
 ) {
     return { device, theme, type, url, icon, tooltip, onPress };
 }
@@ -396,7 +396,11 @@ function Btn({
                         options.theme,
                         attributes
                     )}
-                    onPress={options.onPress}
+                    onPress={
+                        options.onPress
+                            ? Maybe.Just(options.onPress)
+                            : Maybe.Nothing()
+                    }
                 >
                     {children}
                 </InputJsx.Button>
