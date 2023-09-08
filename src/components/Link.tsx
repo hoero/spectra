@@ -1,16 +1,17 @@
 import { Data, Element, ElementJsx, Border, Font } from 'espectro';
+
 import { Theming } from '../themes/theme.ts';
 import { space } from '../tokens/spacing.ts';
-import { Tokens } from '../../mod.ts';
+import { shadows } from '../tokens/tokens.ts';
 
 const { padding, focused, rem, mouseDown, mouseOver } = Element;
 
-export interface DefaultAnchorArgs {
+export interface AnchorArgs {
     theme: Theming;
     url: string;
 }
 
-function DefaultAnchorArgs(theme: Theming, url: string) {
+function AnchorArgs(theme: Theming, url: string) {
     return { theme, url };
 }
 
@@ -39,7 +40,7 @@ function focus(theme: Theming, attributes: Data.Attribute[]) {
 function active(theme: Theming, attributes: Data.Attribute[]) {
     return [
         Font.color({ ...theme.link.color, alpha: 1 }),
-        Border.shadows(Tokens.shadows.down),
+        Border.shadows(shadows.down),
         ...attributes,
     ];
 }
@@ -50,7 +51,7 @@ function Link({
     children,
 }: {
     attributes: Data.Attribute[];
-    options: DefaultAnchorArgs;
+    options: AnchorArgs;
     children: preact.ComponentChild;
 }) {
     return (
@@ -72,7 +73,7 @@ function LinkText({
     children,
 }: {
     attributes: Data.Attribute[];
-    options: DefaultAnchorArgs;
+    options: AnchorArgs;
     children: preact.ComponentChild;
 }) {
     return (

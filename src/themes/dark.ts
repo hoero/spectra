@@ -1,3 +1,5 @@
+import { Data } from 'espectro';
+
 import {
     Colors,
     Dropdown,
@@ -11,7 +13,6 @@ import {
     Button,
     Link,
 } from '../tokens/color.ts';
-import { Data } from 'espectro';
 import Light from './light.ts';
 
 const border: Data.Hsla = { ...light.white, alpha: 0.1 };
@@ -28,6 +29,7 @@ const color: Colors = {
     textSecondary: { ...light.white, alpha: 0.7 },
     textTertiary: { ...light.white, alpha: 0.4 },
     bodyBackground: light.grey.grey5,
+    hover: { ...light.white, lightness: 20 },
     focus: { ...light.white, lightness: 40 },
     gradient: { c1: light.grey.grey10, c2: light.grey.grey10 },
 };
@@ -35,8 +37,10 @@ const color: Colors = {
 /**
  * Button
  */
+const button_ = Light.button;
 
 const button: Button = {
+    ...button_,
     color: { ...light.white, lightness: 16 },
     background: light.white,
 };
@@ -57,10 +61,11 @@ const form_ = Light.form;
 const form: Form = {
     ...form_,
     legendDescription: color.textSecondary,
-    inputBackground: light.grey.grey10,
-    inputBackgroundDisabled: light.grey.grey10,
-    inputBorder: border,
-    inputBorderFocus: light.white,
+    background: color.bodyBackground,
+    backgroundDisabled: light.grey.grey10,
+    border: light.grey.grey60,
+    borderHover: light.grey.grey70,
+    borderFocus: light.white,
 };
 
 /**
@@ -71,9 +76,9 @@ const dropdown_ = Light.dropdown;
 
 const dropdown: Dropdown = {
     ...dropdown_,
-    background: form.inputBackground,
-    border: form.inputBorder,
-    borderFocus: form.inputBorderFocus,
+    background: form.background,
+    border: form.border,
+    borderFocus: form.borderFocus,
     option: { ...light.white, alpha: 0.05 },
     shadow: Data.Shadow(light.black, [0, 2], 6, 0),
 };

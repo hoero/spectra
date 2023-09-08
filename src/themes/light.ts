@@ -1,3 +1,5 @@
+import { Color, Data } from 'espectro';
+
 import {
     Colors,
     Dropdown,
@@ -10,9 +12,8 @@ import {
     light,
     Button,
     Link,
+    status,
 } from '../tokens/color.ts';
-import { Color, Data } from 'espectro';
-import { radius } from '../tokens/tokens.ts';
 
 const { rgba255 } = Color,
     { Shadow } = Data;
@@ -32,8 +33,10 @@ const color: Colors = {
     textSecondary: { ...text, alpha: 0.7 },
     textTertiary: { ...text, alpha: 0.4 },
     bodyBackground: light.white,
+    hover: { ...light.white, lightness: 80 },
     focus: { ...light.white, lightness: 60 },
     gradient: { c1: light.white, c2: light.grey.grey96 },
+    ...status,
 };
 
 /**
@@ -43,6 +46,7 @@ const color: Colors = {
 const button: Button = {
     color: light.white,
     background: { ...light.white, lightness: 16 },
+    radius: 0,
 };
 
 /**
@@ -59,15 +63,12 @@ const link: Link = {
 
 const form: Form = {
     legendDescription: color.textSecondary,
-    inputBackground: color.bodyBackground,
-    inputBackgroundDisabled: color.bodyBackground,
-    inputBorder: { ...light.grey.grey30, saturation: 0.13, lightness: 0.86 },
-    inputBorderFocus: {
-        ...light.grey.grey30,
-        saturation: 0.13,
-        lightness: 0.72,
-    },
-    inputRadius: radius.medium,
+    background: color.bodyBackground,
+    backgroundDisabled: color.bodyBackground,
+    border: { ...light.grey.grey60 },
+    borderHover: { ...light.grey.grey50 },
+    borderFocus: { ...light.white, lightness: 16 },
+    radius: 0,
 };
 
 /**
@@ -75,11 +76,11 @@ const form: Form = {
  */
 
 const dropdown: Dropdown = {
-    background: form.inputBackground,
-    border: form.inputBorder,
-    borderFocus: form.inputBorderFocus,
+    background: form.background,
+    border: form.border,
+    borderFocus: form.borderFocus,
     option: { ...light.black, alpha: 0.05 },
-    radius: form.inputRadius,
+    radius: form.radius,
     shadow: Shadow(rgba255(34, 36, 38, 0.15), [0, 2], 6, 0),
 };
 

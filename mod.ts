@@ -1,5 +1,6 @@
 // Components
 import * as Buttons from './src/components/Button.tsx';
+import * as Inputs from './src/components/Input.tsx';
 import * as Links from './src/components/Link.tsx';
 
 // Themes
@@ -15,6 +16,7 @@ import * as Font from './src/tokens/font.ts';
 
 // Components
 export * as Buttons from './src/components/Button.tsx';
+export * as Inputs from './src/components/Input.tsx';
 export * as Links from './src/components/Link.tsx';
 
 // Themes
@@ -30,6 +32,7 @@ export * as Font from './src/tokens/font.ts';
 
 export default {
     Buttons,
+    Inputs,
     Links,
     Themes: { Dark, Light, Theme },
     Tokens: { Color, Spacing, Font, Tokens },
