@@ -32,7 +32,7 @@ const color: Colors = {
     text: text,
     textSecondary: { ...text, alpha: 0.7 },
     textTertiary: { ...text, alpha: 0.4 },
-    bodyBackground: light.white,
+    bodyBackground: light.grey.grey96,
     hover: { ...light.white, lightness: 80 },
     focus: { ...light.white, lightness: 60 },
     gradient: { c1: light.white, c2: light.grey.grey96 },
@@ -63,7 +63,7 @@ const link: Link = {
 
 const form: Form = {
     legendDescription: color.textSecondary,
-    background: color.bodyBackground,
+    background: light.white,
     backgroundDisabled: color.bodyBackground,
     border: { ...light.grey.grey60 },
     borderHover: { ...light.grey.grey50 },

@@ -61,7 +61,7 @@ const form_ = Light.form;
 const form: Form = {
     ...form_,
     legendDescription: color.textSecondary,
-    background: color.bodyBackground,
+    background: light.grey.grey10,
     backgroundDisabled: light.grey.grey10,
     border: light.grey.grey60,
     borderHover: light.grey.grey70,
