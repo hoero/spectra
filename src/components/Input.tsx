@@ -28,7 +28,7 @@ const { paddingXY, focused, rem, spacing, mouseDown, mouseOver, width, fill } =
 export interface InputArgs {
     device: Responsive.Device;
     theme: Theming;
-    onChange: (text: string) => void;
+    onChange?: (text: string) => void;
     text: string;
     placeholder?: InputJsx.Placeholder;
     label: InputJsx.Label;
@@ -39,7 +39,7 @@ export interface InputArgs {
 export interface InputPasswordArgs {
     device: Responsive.Device;
     theme: Theming;
-    onChange: (text: string) => void;
+    onChange?: (text: string) => void;
     text: string;
     placeholder?: InputJsx.Placeholder;
     label: InputJsx.Label;
@@ -256,6 +256,7 @@ function CurrentPassword({
 
 function customOptions(options: {
     theme: Theming;
+    onChange?: (text: string) => void;
     placeholder?: InputJsx.Placeholder;
     label: InputJsx.Label;
     errorMessage?: string;
@@ -275,6 +276,7 @@ function customOptions(options: {
                       ],
                   }
                 : options.label,
+        onChange: options.onChange ? options.onChange : () => {},
     };
 }
 
