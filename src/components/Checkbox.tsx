@@ -34,7 +34,6 @@ const {
     noStaticStyleSheet,
     inFront,
     jsx,
-    alpha,
     focused,
     mouseDown,
     mouseOver,
