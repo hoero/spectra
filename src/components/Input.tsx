@@ -234,7 +234,6 @@ function CurrentPassword({
     attributes: Data.Attribute[];
     options: InputPasswordArgs;
 }) {
-    const label = { ...options.label };
     return (
         <Field
             theme={options.theme}
@@ -311,4 +310,17 @@ function Field({
     );
 }
 
-export { Text, Email, NewPassword, CurrentPassword, Username };
+export {
+    Text,
+    Email,
+    NewPassword,
+    CurrentPassword,
+    Username,
+    Field,
+    errorMessageAttrs,
+    errorAttrs,
+    errorActiveFocusAttrs,
+    errorHoverAttrs,
+    activeFocus,
+    hover,
+};

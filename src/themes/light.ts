@@ -65,8 +65,8 @@ const form: Form = {
     legendDescription: color.textSecondary,
     background: light.white,
     backgroundDisabled: color.bodyBackground,
-    border: { ...light.grey.grey60 },
-    borderHover: { ...light.grey.grey50 },
+    border: light.grey.grey60,
+    borderHover: light.grey.grey50,
     borderFocus: { ...light.white, lightness: 16 },
     radius: 0,
 };

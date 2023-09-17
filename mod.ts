@@ -1,5 +1,6 @@
 // Components
 import * as Buttons from './src/components/Button.tsx';
+import * as Checkbox from './src/components/Checkbox.tsx';
 import * as Inputs from './src/components/Input.tsx';
 import * as Links from './src/components/Link.tsx';
 
@@ -16,6 +17,7 @@ import * as Font from './src/tokens/font.ts';
 
 // Components
 export * as Buttons from './src/components/Button.tsx';
+export * as Checkbox from './src/components/Checkbox.tsx';
 export * as Inputs from './src/components/Input.tsx';
 export * as Links from './src/components/Link.tsx';
 
@@ -32,6 +34,7 @@ export * as Font from './src/tokens/font.ts';
 
 export default {
     Buttons,
+    Checkbox,
     Inputs,
     Links,
     Themes: { Dark, Light, Theme },
