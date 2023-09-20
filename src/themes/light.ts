@@ -13,6 +13,7 @@ import {
     Button,
     Link,
     status,
+    Accordion,
 } from '../tokens/color.ts';
 
 const { rgba255 } = Color,
@@ -37,6 +38,16 @@ const color: Colors = {
     focus: { ...light.white, lightness: 60 },
     gradient: { c1: light.white, c2: light.grey.grey96 },
     ...status,
+};
+
+/**
+ * Button
+ */
+
+const accordion: Accordion = {
+    color: color.text,
+    background: light.white,
+    border: color.text,
 };
 
 /**
@@ -131,6 +142,7 @@ const tooltip: Tooltip = { color: light.white, background: light.grey.grey30 };
 
 export default {
     color,
+    accordion,
     button,
     dropdown,
     form,

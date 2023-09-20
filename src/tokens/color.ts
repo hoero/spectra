@@ -18,6 +18,12 @@ export interface Colors {
     info: Data.Hsla;
 }
 
+export interface Accordion {
+    color: Data.Hsla;
+    background: Data.Hsla;
+    border: Data.Hsla;
+}
+
 export interface Button {
     color: Data.Hsla;
     background: Data.Hsla;

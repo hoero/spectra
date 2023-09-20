@@ -12,6 +12,7 @@ import {
     light,
     Button,
     Link,
+    Accordion,
 } from '../tokens/color.ts';
 import Light from './light.ts';
 
@@ -25,7 +26,7 @@ const color_ = Light.color;
 
 const color: Colors = {
     ...color_,
-    text: light.white,
+    text: { ...light.white, lightness: 96 },
     textSecondary: { ...light.white, alpha: 0.7 },
     textTertiary: { ...light.white, alpha: 0.4 },
     bodyBackground: light.grey.grey5,
@@ -37,12 +38,21 @@ const color: Colors = {
 /**
  * Button
  */
+const accordion: Accordion = {
+    color: { ...light.white, lightness: 16 },
+    background: light.grey.grey10,
+    border: light.grey.grey40,
+};
+
+/**
+ * Button
+ */
 const button_ = Light.button;
 
 const button: Button = {
     ...button_,
     color: { ...light.white, lightness: 16 },
-    background: light.white,
+    background: { ...light.white, lightness: 96 },
 };
 
 /**
@@ -50,7 +60,7 @@ const button: Button = {
  */
 
 const link: Link = {
-    color: light.white,
+    color: { ...light.white, lightness: 96 },
 };
 
 /**
@@ -123,7 +133,7 @@ const table: Table = {
 
 const tag: Tag = {
     color: { ...light.white, lightness: 16 },
-    background: light.white,
+    background: { ...light.white, lightness: 96 },
 };
 
 /**
@@ -131,7 +141,7 @@ const tag: Tag = {
  */
 const tooltip: Tooltip = {
     color: { ...light.white, lightness: 16 },
-    background: light.white,
+    background: { ...light.white, lightness: 96 },
 };
 
 export default {
@@ -145,4 +155,5 @@ export default {
     tooltip,
     button,
     link,
+    accordion,
 };
