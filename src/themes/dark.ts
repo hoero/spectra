@@ -53,7 +53,7 @@ const accordion: Accordion = {
     background: light.grey.grey10,
     border,
     hover: light.grey.grey10,
-    focus: light.grey.grey20,
+    focus: { ...light.white, lightness: 13 },
 };
 
 /**

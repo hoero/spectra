@@ -59,7 +59,7 @@ const accordion: Accordion = {
     background: light.grey.grey96,
     border: light.grey.grey60,
     hover: light.grey.grey90,
-    focus: light.grey.grey80,
+    focus: { ...light.white, lightness: 88 },
 };
 
 /**
