@@ -22,6 +22,13 @@ export interface Accordion {
     color: Data.Hsla;
     background: Data.Hsla;
     border: Data.Hsla;
+    hover: Data.Hsla;
+    focus: Data.Hsla;
+}
+
+export interface Aside {
+    background: Data.Hsla;
+    border: Data.Hsla;
 }
 
 export interface Button {

@@ -86,4 +86,4 @@ function LinkText({
     );
 }
 
-export { Link, LinkText };
+export { Link, LinkText, focus, hover, active };

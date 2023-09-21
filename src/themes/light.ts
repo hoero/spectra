@@ -14,6 +14,7 @@ import {
     Link,
     status,
     Accordion,
+    Aside,
 } from '../tokens/color.ts';
 
 const { rgba255 } = Color,
@@ -41,13 +42,24 @@ const color: Colors = {
 };
 
 /**
+ * Aside
+ */
+
+const aside: Aside = {
+    background: light.grey.grey90,
+    border: light.grey.grey80,
+};
+
+/**
  * Button
  */
 
 const accordion: Accordion = {
     color: color.text,
-    background: light.white,
-    border: color.text,
+    background: light.grey.grey96,
+    border: light.grey.grey60,
+    hover: light.grey.grey90,
+    focus: light.grey.grey80,
 };
 
 /**
@@ -152,4 +164,5 @@ export default {
     tag,
     tooltip,
     link,
+    aside,
 };

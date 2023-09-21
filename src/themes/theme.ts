@@ -15,6 +15,7 @@ import {
     neutral,
     Link,
     Accordion,
+    Aside,
 } from '../tokens/color.ts';
 
 export enum Theme {
@@ -25,6 +26,7 @@ export enum Theme {
 export interface Theming {
     color: Colors;
     accordion: Accordion;
+    aside: Aside;
     button: Button;
     link: Link;
     dropdown: Dropdown;
@@ -43,6 +45,7 @@ function theming(theme: Theme): Theming {
             return {
                 color: Dark.color,
                 accordion: Dark.accordion,
+                aside: Dark.aside,
                 button: Dark.button,
                 link: Dark.link,
                 dropdown: Dark.dropdown,
@@ -60,6 +63,7 @@ function theming(theme: Theme): Theming {
             return {
                 color: Light.color,
                 accordion: Light.accordion,
+                aside: Light.aside,
                 button: Light.button,
                 link: Light.link,
                 dropdown: Light.dropdown,

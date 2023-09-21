@@ -13,6 +13,7 @@ import {
     Button,
     Link,
     Accordion,
+    Aside,
 } from '../tokens/color.ts';
 import Light from './light.ts';
 
@@ -36,17 +37,29 @@ const color: Colors = {
 };
 
 /**
- * Button
+ * Aside
  */
-const accordion: Accordion = {
-    color: { ...light.white, lightness: 16 },
+
+const aside: Aside = {
     background: light.grey.grey10,
-    border: light.grey.grey40,
+    border,
 };
 
 /**
  * Button
  */
+const accordion: Accordion = {
+    color: color.text,
+    background: light.grey.grey10,
+    border,
+    hover: light.grey.grey10,
+    focus: light.grey.grey20,
+};
+
+/**
+ * Button
+ */
+
 const button_ = Light.button;
 
 const button: Button = {
@@ -66,6 +79,7 @@ const link: Link = {
 /**
  * Form
  */
+
 const form_ = Light.form;
 
 const form: Form = {
@@ -156,4 +170,5 @@ export default {
     button,
     link,
     accordion,
+    aside,
 };
