@@ -7,6 +7,8 @@ const { breakpoints } = Responsive,
 const headings: Data.Attribute[] = [Font.bold];
 
 const size = {
+    scaled1: scaled(-1),
+    scaled0: scaled(-0.5),
     base: scaled(1),
     scaled2x: scaled(2),
     scaled3x: scaled(3),
