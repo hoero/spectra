@@ -221,6 +221,26 @@ function ButtonSecondary({
     );
 }
 
+function ButtonAnchorSecondary({
+    attributes,
+    options,
+    children,
+}: {
+    attributes: Data.Attribute[];
+    options: DefaultAnchorArgs;
+    children: preact.ComponentChild;
+}) {
+    const btnOptions = defaultAnchorArgs(options.theme);
+    return (
+        <Btn
+            attributes={secondaryAttr(options.theme).concat(attributes)}
+            options={{ ...btnOptions, device: options.device }}
+        >
+            {children}
+        </Btn>
+    );
+}
+
 // Ghost buttons
 
 function ghostAttr(theme: Theming) {
@@ -228,15 +248,15 @@ function ghostAttr(theme: Theming) {
         Font.color(theme.button.background),
         Background.color({ ...theme.button.background, alpha: 0 }),
         Border.color({ ...theme.button.background, alpha: 0 }),
+        focused(ghostFocus(theme)),
         mouseDown(ghostActive(theme.button)),
         mouseOver(ghostHover(theme.button)),
-        focused(ghostFocus(theme)),
     ];
 }
 
 function ghostHover(color: Button) {
     return [
-        Background.color({ ...color.color, alpha: 0.1 }),
+        Background.color({ ...color.background, alpha: 0.1 }),
         Border.shadow(noShadow),
     ];
 }
@@ -247,7 +267,7 @@ function ghostFocus(theme: Theming) {
 
 function ghostActive(color: Button) {
     return [
-        Background.color({ ...color.color, alpha: 0.15 }),
+        Background.color({ ...color.background, alpha: 0.15 }),
         Border.shadow(noShadow),
     ];
 }
@@ -262,6 +282,26 @@ function ButtonGhost({
     children: preact.ComponentChild;
 }) {
     const btnOptions = defaultBtnArgs(options.theme, options.onPress);
+    return (
+        <Btn
+            attributes={ghostAttr(options.theme).concat(attributes)}
+            options={{ ...btnOptions, device: options.device }}
+        >
+            {children}
+        </Btn>
+    );
+}
+
+function ButtonAnchorGhost({
+    attributes,
+    options,
+    children,
+}: {
+    attributes: Data.Attribute[];
+    options: DefaultAnchorArgs;
+    children: preact.ComponentChild;
+}) {
+    const btnOptions = defaultAnchorArgs(options.theme);
     return (
         <Btn
             attributes={ghostAttr(options.theme).concat(attributes)}
@@ -408,4 +448,12 @@ function Btn({
     }
 }
 
-export { Button, ButtonAnchor, ButtonSecondary, ButtonGhost, size };
+export {
+    Button,
+    ButtonAnchor,
+    ButtonAnchorSecondary,
+    ButtonAnchorGhost,
+    ButtonSecondary,
+    ButtonGhost,
+    size,
+};
