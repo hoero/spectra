@@ -48,6 +48,12 @@ export interface InputPasswordArgs {
     errorMessage?: string;
 }
 
+// Size
+const size = {
+    xs: paddingXY(rem(space.sm), rem(space.xs)),
+    sm: paddingXY(rem(space.sm + 0.2), rem(space.sm)),
+};
+
 function attributes_(
     device: Responsive.Device,
     theme: Theming,
@@ -304,7 +310,13 @@ function Field({
                         : Data.NoAttribute(),
                 ]}
             >
-                {errorMessage ? errorMessage : message ? message : ' '}
+                {errorMessage
+                    ? errorMessage
+                    : message
+                    ? message
+                    : message === ''
+                    ? ''
+                    : ' '}
             </ElementJsx.El>
         </ElementJsx.Column>
     );
@@ -323,4 +335,5 @@ export {
     errorHoverAttrs,
     activeFocus,
     hover,
+    size,
 };
