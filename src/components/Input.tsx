@@ -301,7 +301,7 @@ function Field({
     return (
         <ElementJsx.Column attributes={[width(fill), spacing(7)]}>
             {children}
-            <ElementJsx.El
+            <ElementJsx.Paragraph
                 attributes={[
                     width(fill),
                     Font.size(rem(Rem.scaled(-1))),
@@ -317,7 +317,8 @@ function Field({
                     : message === ''
                     ? ''
                     : ' '}
-            </ElementJsx.El>
+                {''}
+            </ElementJsx.Paragraph>
         </ElementJsx.Column>
     );
 }
