@@ -102,39 +102,12 @@ function defaultBtnArgs(
     );
 }
 
-function defaultAnchorArgs(theme: Theming): ButtonArgs {
+function defaultAnchorArgs(theme: Theming, url: string): ButtonArgs {
     return ButtonArgs(
         Device(DeviceClass.Desktop, Orientation.Landscape),
         theme,
         Type.Anchor,
-        '',
-        undefined
-    );
-}
-
-function defaultBtnIconArgs(
-    theme: Theming,
-    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>
-): ButtonIconArgs {
-    return ButtonIconArgs(
-        Device(DeviceClass.Desktop, Orientation.Landscape),
-        theme,
-        Type.Button,
-        '',
-        '',
-        Nothing(),
-        onPress
-    );
-}
-
-function defaultAnchorIconArgs(theme: Theming): ButtonIconArgs {
-    return ButtonIconArgs(
-        Device(DeviceClass.Desktop, Orientation.Landscape),
-        theme,
-        Type.Anchor,
-        '',
-        '',
-        Nothing(),
+        url,
         undefined
     );
 }
@@ -177,7 +150,7 @@ function ButtonAnchor({
     options: DefaultAnchorArgs;
     children: preact.ComponentChild;
 }) {
-    const btnOptions = defaultAnchorArgs(options.theme);
+    const btnOptions = defaultAnchorArgs(options.theme, options.url);
     return (
         <Btn
             attributes={attributes}
@@ -230,7 +203,7 @@ function ButtonAnchorSecondary({
     options: DefaultAnchorArgs;
     children: preact.ComponentChild;
 }) {
-    const btnOptions = defaultAnchorArgs(options.theme);
+    const btnOptions = defaultAnchorArgs(options.theme, options.url);
     return (
         <Btn
             attributes={secondaryAttr(options.theme).concat(attributes)}
@@ -301,7 +274,7 @@ function ButtonAnchorGhost({
     options: DefaultAnchorArgs;
     children: preact.ComponentChild;
 }) {
-    const btnOptions = defaultAnchorArgs(options.theme);
+    const btnOptions = defaultAnchorArgs(options.theme, options.url);
     return (
         <Btn
             attributes={ghostAttr(options.theme).concat(attributes)}
