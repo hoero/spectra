@@ -15,6 +15,7 @@ import { Maybe } from 'elmish';
 
 import { Theming } from '../themes/theme.ts';
 import { radius } from '../tokens/tokens.ts';
+import { space } from '../tokens/spacing.ts';
 import {
     Field,
     activeFocus,
@@ -37,6 +38,7 @@ const {
         alignLeft,
         shrink,
         fill,
+        rem,
     } = Element,
     { OptionState } = Input,
     { OptionWith } = InputJsx;
@@ -188,7 +190,7 @@ function Radio({
 }) {
     return (
         <InputJsx.Radio
-            attributes={attributes}
+            attributes={[spacing(rem(space.lg)), ...attributes]}
             options={{
                 ...options,
                 ...customOptions(options),
@@ -206,7 +208,7 @@ function RadioRow({
 }) {
     return (
         <InputJsx.RadioRow
-            attributes={attributes}
+            attributes={[spacing(rem(space.lg)), ...attributes]}
             options={{
                 ...options,
                 ...customOptions(options),
