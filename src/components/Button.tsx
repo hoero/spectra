@@ -31,14 +31,16 @@ export interface DefaultButtonArgs {
     device: Responsive.Device;
     theme: Theming;
     onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>;
+    invalid?: boolean;
 }
 
 function DefaultButtonArgs(
     device: Responsive.Device,
     theme: Theming,
-    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>
+    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>,
+    invalid?: boolean
 ) {
-    return { device, theme, onPress };
+    return { device, theme, onPress, invalid };
 }
 
 export interface DefaultButtonIconArgs {
@@ -61,14 +63,16 @@ export interface DefaultAnchorArgs {
     device: Responsive.Device;
     theme: Theming;
     url: string;
+    invalid?: boolean;
 }
 
 function DefaultAnchorArgs(
     device: Responsive.Device,
     theme: Theming,
-    url: string
+    url: string,
+    invalid?: boolean
 ) {
-    return { device, theme, url };
+    return { device, theme, url, invalid };
 }
 
 export interface DefaultAnchorIconArgs {
@@ -91,24 +95,31 @@ function DefaultAnchorIconArgs(
 
 function defaultBtnArgs(
     theme: Theming,
-    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>
+    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>,
+    invalid?: boolean
 ): ButtonArgs {
     return ButtonArgs(
         Device(DeviceClass.Desktop, Orientation.Landscape),
         theme,
         Type.Button,
         '',
-        onPress
+        onPress,
+        invalid
     );
 }
 
-function defaultAnchorArgs(theme: Theming, url: string): ButtonArgs {
+function defaultAnchorArgs(
+    theme: Theming,
+    url: string,
+    invalid?: boolean
+): ButtonArgs {
     return ButtonArgs(
         Device(DeviceClass.Desktop, Orientation.Landscape),
         theme,
         Type.Anchor,
         url,
-        undefined
+        undefined,
+        invalid
     );
 }
 
@@ -128,7 +139,11 @@ function Button({
     options: DefaultButtonArgs;
     children: preact.ComponentChild;
 }) {
-    const btnOptions = defaultBtnArgs(options.theme, options.onPress);
+    const btnOptions = defaultBtnArgs(
+        options.theme,
+        options.onPress,
+        options.invalid
+    );
     return (
         <Btn
             attributes={attributes}
@@ -150,7 +165,11 @@ function ButtonAnchor({
     options: DefaultAnchorArgs;
     children: preact.ComponentChild;
 }) {
-    const btnOptions = defaultAnchorArgs(options.theme, options.url);
+    const btnOptions = defaultAnchorArgs(
+        options.theme,
+        options.url,
+        options.invalid
+    );
     return (
         <Btn
             attributes={attributes}
@@ -167,9 +186,9 @@ function ButtonAnchor({
 
 // Secondary buttons
 
-function secondaryAttr(theme: Theming) {
+function secondaryAttr(theme: Theming, invalid: boolean) {
     return [
-        Font.color(theme.button.background),
+        Font.color(invalid ? theme.color.invalid : theme.button.background),
         Background.color({ ...theme.button.background, alpha: 0 }),
     ];
 }
@@ -183,10 +202,17 @@ function ButtonSecondary({
     options: DefaultButtonArgs;
     children: preact.ComponentChild;
 }) {
-    const btnOptions = defaultBtnArgs(options.theme, options.onPress);
+    const btnOptions = defaultBtnArgs(
+        options.theme,
+        options.onPress,
+        options.invalid
+    );
     return (
         <Btn
-            attributes={secondaryAttr(options.theme).concat(attributes)}
+            attributes={secondaryAttr(
+                options.theme,
+                options.invalid ? options.invalid : false
+            ).concat(attributes)}
             options={{ ...btnOptions, device: options.device }}
         >
             {children}
@@ -203,10 +229,17 @@ function ButtonAnchorSecondary({
     options: DefaultAnchorArgs;
     children: preact.ComponentChild;
 }) {
-    const btnOptions = defaultAnchorArgs(options.theme, options.url);
+    const btnOptions = defaultAnchorArgs(
+        options.theme,
+        options.url,
+        options.invalid
+    );
     return (
         <Btn
-            attributes={secondaryAttr(options.theme).concat(attributes)}
+            attributes={secondaryAttr(
+                options.theme,
+                options.invalid ? options.invalid : false
+            ).concat(attributes)}
             options={{ ...btnOptions, device: options.device }}
         >
             {children}
@@ -216,31 +249,50 @@ function ButtonAnchorSecondary({
 
 // Ghost buttons
 
-function ghostAttr(theme: Theming) {
+function ghostAttr(theme: Theming, invalid: boolean) {
     return [
-        Font.color(theme.button.background),
+        Font.color(invalid ? theme.color.invalid : theme.button.background),
         Background.color({ ...theme.button.background, alpha: 0 }),
         Border.color({ ...theme.button.background, alpha: 0 }),
-        focused(ghostFocus(theme)),
-        mouseDown(ghostActive(theme.button)),
-        mouseOver(ghostHover(theme.button)),
+        focused(ghostFocus(theme, invalid)),
+        mouseDown(ghostActive(theme, invalid)),
+        mouseOver(ghostHover(theme, invalid)),
     ];
 }
 
-function ghostHover(color: Button) {
+function ghostHover(theme: Theming, invalid: boolean) {
     return [
-        Background.color({ ...color.background, alpha: 0.1 }),
+        Background.color(
+            invalid
+                ? { ...theme.color.invalid, alpha: 0.1 }
+                : { ...theme.button.background, alpha: 0.1 }
+        ),
         Border.shadow(noShadow),
     ];
 }
 
-function ghostFocus(theme: Theming) {
-    return [Border.shadow(Data.Shadow(theme.color.focus, [0, 0], 0, 3))];
+function ghostFocus(theme: Theming, invalid: boolean) {
+    return [
+        Border.shadow(
+            Data.Shadow(
+                invalid
+                    ? { ...theme.color.invalid, alpha: 0.4 }
+                    : theme.color.focus,
+                [0, 0],
+                0,
+                3
+            )
+        ),
+    ];
 }
 
-function ghostActive(color: Button) {
+function ghostActive(theme: Theming, invalid: boolean) {
     return [
-        Background.color({ ...color.background, alpha: 0.15 }),
+        Background.color(
+            invalid
+                ? { ...theme.color.invalid, alpha: 0.15 }
+                : { ...theme.button.background, alpha: 0.15 }
+        ),
         Border.shadow(noShadow),
     ];
 }
@@ -254,10 +306,17 @@ function ButtonGhost({
     options: DefaultButtonArgs;
     children: preact.ComponentChild;
 }) {
-    const btnOptions = defaultBtnArgs(options.theme, options.onPress);
+    const btnOptions = defaultBtnArgs(
+        options.theme,
+        options.onPress,
+        options.invalid
+    );
     return (
         <Btn
-            attributes={ghostAttr(options.theme).concat(attributes)}
+            attributes={ghostAttr(
+                options.theme,
+                options.invalid ? options.invalid : false
+            ).concat(attributes)}
             options={{ ...btnOptions, device: options.device }}
         >
             {children}
@@ -274,10 +333,17 @@ function ButtonAnchorGhost({
     options: DefaultAnchorArgs;
     children: preact.ComponentChild;
 }) {
-    const btnOptions = defaultAnchorArgs(options.theme, options.url);
+    const btnOptions = defaultAnchorArgs(
+        options.theme,
+        options.url,
+        options.invalid
+    );
     return (
         <Btn
-            attributes={ghostAttr(options.theme).concat(attributes)}
+            attributes={ghostAttr(
+                options.theme,
+                options.invalid ? options.invalid : false
+            ).concat(attributes)}
             options={{ ...btnOptions, device: options.device }}
         >
             {children}
@@ -293,6 +359,7 @@ interface ButtonArgs {
     type: Type;
     url: string;
     onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>;
+    invalid?: boolean;
 }
 
 function ButtonArgs(
@@ -300,9 +367,10 @@ function ButtonArgs(
     theme: Theming,
     type: Type,
     url: string,
-    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>
+    onPress?: preact.JSX.EventHandler<preact.JSX.TargetedEvent>,
+    invalid?: boolean
 ) {
-    return { device, theme, type, url, onPress };
+    return { device, theme, type, url, onPress, invalid };
 }
 
 interface ButtonIconArgs {
@@ -330,6 +398,7 @@ function ButtonIconArgs(
 function attributes_(
     device: Responsive.Device,
     theme: Theming,
+    invalid: boolean,
     attributes: Data.Attribute[]
 ) {
     return [
@@ -346,13 +415,15 @@ function attributes_(
             })
         ),
         Font.color(theme.button.color),
-        Background.color(theme.button.background),
+        Background.color(
+            invalid ? theme.color.invalid : theme.button.background
+        ),
         Border.width(1),
-        Border.color(theme.button.background),
+        Border.color(invalid ? theme.color.invalid : theme.button.background),
         Border.rounded(theme.button.radius),
         mouseDown(active([])),
         mouseOver(hover([])),
-        focused(focus(theme, [])),
+        focused(focus(theme, invalid, [])),
         ...attributes,
     ];
 }
@@ -361,11 +432,18 @@ function hover(attributes: Data.Attribute[]) {
     return [moveUp(1), Border.shadows(shadows.up), ...attributes];
 }
 
-function focus(theme: Theming, attributes: Data.Attribute[]) {
+function focus(theme: Theming, invalid: boolean, attributes: Data.Attribute[]) {
     return [
         moveUp(1),
         Border.shadows([
-            Data.Shadow(theme.color.focus, [0, 0], 0, 3),
+            Data.Shadow(
+                invalid
+                    ? { ...theme.color.invalid, alpha: 0.4 }
+                    : theme.color.focus,
+                [0, 0],
+                0,
+                3
+            ),
             ...shadows.up,
         ]),
         ...attributes,
@@ -392,6 +470,7 @@ function Btn({
                     attributes={attributes_(
                         options.device,
                         options.theme,
+                        options.invalid ? options.invalid : false,
                         attributes
                     )}
                     url={options.url}
@@ -407,6 +486,7 @@ function Btn({
                     attributes={attributes_(
                         options.device,
                         options.theme,
+                        options.invalid ? options.invalid : false,
                         attributes
                     )}
                     onPress={
