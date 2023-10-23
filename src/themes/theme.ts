@@ -24,6 +24,7 @@ export enum Theme {
 }
 
 export interface Theming {
+    type: Theme;
     color: Colors;
     accordion: Accordion;
     aside: Aside;
@@ -43,6 +44,7 @@ function theming(theme: Theme): Theming {
     switch (theme) {
         case Theme.Dark:
             return {
+                type: Theme.Dark,
                 color: Dark.color,
                 accordion: Dark.accordion,
                 aside: Dark.aside,
@@ -61,6 +63,7 @@ function theming(theme: Theme): Theming {
         case Theme.Light:
         default:
             return {
+                type: Theme.Light,
                 color: Light.color,
                 accordion: Light.accordion,
                 aside: Light.aside,
@@ -76,6 +79,12 @@ function theming(theme: Theme): Theming {
                 tooltip: Light.tooltip,
             };
     }
+}
+
+function opposite(theme: Theming) {
+    return theme.type === Theme.Light
+        ? theming(Theme.Dark)
+        : theming(Theme.Light);
 }
 
 function convertToTheme(state: boolean) {
@@ -105,4 +114,4 @@ function toString(theme: Theme) {
     }
 }
 
-export { convertToTheme, theming, toBool, toString };
+export { convertToTheme, theming, toBool, toString, opposite };
