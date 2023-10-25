@@ -124,7 +124,10 @@ function defaultAnchorArgs(
 }
 
 // Size
-const size = { xs: paddingXY(rem(0.6), rem(space.xs)) };
+const size = {
+    xs: paddingXY(rem(0.6), rem(space.xs)),
+    sm: paddingXY(rem(1), rem(space.sm)),
+};
 
 // Buttons type: button or anchor
 

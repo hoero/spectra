@@ -337,4 +337,5 @@ export {
     activeFocus,
     hover,
     size,
+    attributes_,
 };

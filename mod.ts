@@ -3,6 +3,7 @@ import * as Buttons from './src/components/Button.tsx';
 import * as Checkbox from './src/components/Checkbox.tsx';
 import * as Inputs from './src/components/Input.tsx';
 import * as Links from './src/components/Link.tsx';
+import * as Message from './src/components/Message.tsx';
 import * as Radios from './src/components/Radio.tsx';
 
 // Themes
@@ -21,6 +22,7 @@ export * as Buttons from './src/components/Button.tsx';
 export * as Checkbox from './src/components/Checkbox.tsx';
 export * as Inputs from './src/components/Input.tsx';
 export * as Links from './src/components/Link.tsx';
+export * as Message from './src/components/Message.tsx';
 export * as Radios from './src/components/Radio.tsx';
 
 // Themes
@@ -39,6 +41,7 @@ export default {
     Checkbox,
     Inputs,
     Links,
+    Message,
     Radios,
     Themes: { Dark, Light, Theme },
     Tokens: { Color, Spacing, Font, Tokens },
