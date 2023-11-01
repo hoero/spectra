@@ -22,8 +22,17 @@ import { space } from '../tokens/spacing.ts';
 //     SpellChecked,
 // } = InputJsx;
 
-const { paddingXY, focused, rem, spacing, mouseDown, mouseOver, width, fill } =
-    Element;
+const {
+    paddingXY,
+    focused,
+    rem,
+    spacing,
+    mouseDown,
+    mouseOver,
+    width,
+    fill,
+    paddingEach,
+} = Element;
 
 export interface InputArgs {
     device: Responsive.Device;
@@ -137,21 +146,15 @@ function Text({
     options: InputArgs;
 }) {
     return (
-        <Field
-            theme={options.theme}
-            message={options.message}
-            errorMessage={options.errorMessage}
-        >
-            <InputJsx.Text
-                attributes={attributes_(
-                    options.device,
-                    options.theme,
-                    attributes,
-                    options.errorMessage
-                )}
-                options={{ ...options, ...customOptions(options) }}
-            />
-        </Field>
+        <InputJsx.Text
+            attributes={attributes_(
+                options.device,
+                options.theme,
+                attributes,
+                options.errorMessage
+            )}
+            options={{ ...options, ...customOptions(options) }}
+        />
     );
 }
 
@@ -163,21 +166,15 @@ function Username({
     options: InputArgs;
 }) {
     return (
-        <Field
-            theme={options.theme}
-            message={options.message}
-            errorMessage={options.errorMessage}
-        >
-            <InputJsx.Username
-                attributes={attributes_(
-                    options.device,
-                    options.theme,
-                    attributes,
-                    options.errorMessage
-                )}
-                options={{ ...options, ...customOptions(options) }}
-            />
-        </Field>
+        <InputJsx.Username
+            attributes={attributes_(
+                options.device,
+                options.theme,
+                attributes,
+                options.errorMessage
+            )}
+            options={{ ...options, ...customOptions(options) }}
+        />
     );
 }
 
@@ -189,21 +186,15 @@ function Email({
     options: InputArgs;
 }) {
     return (
-        <Field
-            theme={options.theme}
-            message={options.message}
-            errorMessage={options.errorMessage}
-        >
-            <InputJsx.Email
-                attributes={attributes_(
-                    options.device,
-                    options.theme,
-                    attributes,
-                    options.errorMessage
-                )}
-                options={{ ...options, ...customOptions(options) }}
-            />
-        </Field>
+        <InputJsx.Email
+            attributes={attributes_(
+                options.device,
+                options.theme,
+                attributes,
+                options.errorMessage
+            )}
+            options={{ ...options, ...customOptions(options) }}
+        />
     );
 }
 
@@ -215,21 +206,15 @@ function NewPassword({
     options: InputPasswordArgs;
 }) {
     return (
-        <Field
-            theme={options.theme}
-            message={options.message}
-            errorMessage={options.errorMessage}
-        >
-            <InputJsx.NewPassword
-                attributes={attributes_(
-                    options.device,
-                    options.theme,
-                    attributes,
-                    options.errorMessage
-                )}
-                options={{ ...options, ...customOptions(options) }}
-            />
-        </Field>
+        <InputJsx.NewPassword
+            attributes={attributes_(
+                options.device,
+                options.theme,
+                attributes,
+                options.errorMessage
+            )}
+            options={{ ...options, ...customOptions(options) }}
+        />
     );
 }
 
@@ -241,29 +226,26 @@ function CurrentPassword({
     options: InputPasswordArgs;
 }) {
     return (
-        <Field
-            theme={options.theme}
-            message={options.message}
-            errorMessage={options.errorMessage}
-        >
-            <InputJsx.CurrentPassword
-                attributes={attributes_(
-                    options.device,
-                    options.theme,
-                    attributes,
-                    options.errorMessage
-                )}
-                options={{ ...options, ...customOptions(options) }}
-            />
-        </Field>
+        <InputJsx.CurrentPassword
+            attributes={attributes_(
+                options.device,
+                options.theme,
+                attributes,
+                options.errorMessage
+            )}
+            options={{ ...options, ...customOptions(options) }}
+        />
     );
 }
+
+// Core
 
 function customOptions(options: {
     theme: Theming;
     onChange?: (text: string) => void;
     placeholder?: InputJsx.Placeholder;
     label: InputJsx.Label;
+    message?: string;
     errorMessage?: string;
 }) {
     return {
@@ -272,20 +254,52 @@ function customOptions(options: {
             : Maybe.Nothing(),
         label:
             options.label.type !== Input.Labels.HiddenLabel &&
-            options.errorMessage
+            (options.message || options.errorMessage)
                 ? {
                       ...options.label,
                       attributes: [
                           ...options.label.attributes,
-                          errorMessageAttrs(options.theme),
+                          width(fill),
+                          options.errorMessage
+                              ? errorMessageAttrs(options.theme)
+                              : Data.NoAttribute(),
                       ],
+                      children: (
+                          <>
+                              <ElementJsx.Text>
+                                  {options.label.children}
+                              </ElementJsx.Text>
+                              <ElementJsx.Paragraph
+                                  attributes={[
+                                      width(fill),
+                                      paddingEach({
+                                          top: rem(space.sm),
+                                          right: rem(0),
+                                          bottom: rem(0),
+                                          left: rem(0),
+                                      }),
+                                      Font.size(rem(Rem.scaled(-1))),
+                                      options.errorMessage
+                                          ? errorMessageAttrs(options.theme)
+                                          : Data.NoAttribute(),
+                                  ]}
+                              >
+                                  {options.errorMessage
+                                      ? options.errorMessage
+                                      : options.message
+                                      ? options.message
+                                      : options.message === ''
+                                      ? ''
+                                      : ' '}
+                                  {''}
+                              </ElementJsx.Paragraph>
+                          </>
+                      ),
                   }
                 : options.label,
         onChange: options.onChange ? options.onChange : () => {},
     };
 }
-
-// Core components
 
 function Field({
     theme,
@@ -299,26 +313,28 @@ function Field({
     children: preact.ComponentChild;
 }) {
     return (
-        <ElementJsx.Column attributes={[width(fill), spacing(7)]}>
+        <ElementJsx.Column attributes={[width(fill), spacing(rem(space.sm))]}>
+            {errorMessage && message && (
+                <ElementJsx.Paragraph
+                    attributes={[
+                        width(fill),
+                        Font.size(rem(Rem.scaled(-1))),
+                        errorMessage
+                            ? errorMessageAttrs(theme)
+                            : Data.NoAttribute(),
+                    ]}
+                >
+                    {errorMessage
+                        ? errorMessage
+                        : message
+                        ? message
+                        : message === ''
+                        ? ''
+                        : ' '}
+                    {''}
+                </ElementJsx.Paragraph>
+            )}
             {children}
-            <ElementJsx.Paragraph
-                attributes={[
-                    width(fill),
-                    Font.size(rem(Rem.scaled(-1))),
-                    errorMessage
-                        ? errorMessageAttrs(theme)
-                        : Data.NoAttribute(),
-                ]}
-            >
-                {errorMessage
-                    ? errorMessage
-                    : message
-                    ? message
-                    : message === ''
-                    ? ''
-                    : ' '}
-                {''}
-            </ElementJsx.Paragraph>
         </ElementJsx.Column>
     );
 }

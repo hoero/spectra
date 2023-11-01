@@ -10,6 +10,7 @@ import {
     Responsive,
     Rem,
     Attributes,
+    Font,
 } from 'espectro';
 import { Maybe } from 'elmish';
 
@@ -217,60 +218,59 @@ function RadioRow({
     );
 }
 
-function RadioField({
-    attributes,
-    options,
-}: {
-    attributes: Data.Attribute[];
-    options: RadioArgs;
-}) {
-    return (
-        <Field
-            theme={options.theme}
-            message={options.message}
-            errorMessage={options.errorMessage}
-        >
-            <Radio attributes={attributes} options={options} />
-        </Field>
-    );
-}
-
-function RadioRowField({
-    attributes,
-    options,
-}: {
-    attributes: Data.Attribute[];
-    options: RadioArgs;
-}) {
-    return (
-        <Field
-            theme={options.theme}
-            message={options.message}
-            errorMessage={options.errorMessage}
-        >
-            <RadioRow attributes={attributes} options={options} />
-        </Field>
-    );
-}
-
 function customOptions(options: {
     device: Responsive.Device;
     theme: Theming;
     onChange?: (option: any) => void;
     selected?: any;
     label: InputJsx.Label;
+    message?: string;
     errorMessage?: string;
 }) {
     return {
         label:
             options.label.type !== Input.Labels.HiddenLabel &&
-            options.errorMessage
+            (options.message || options.errorMessage)
                 ? {
                       ...options.label,
                       attributes: [
                           ...options.label.attributes,
-                          errorMessageAttrs(options.theme),
+                          width(fill),
+                          options.errorMessage
+                              ? errorMessageAttrs(options.theme)
+                              : Data.NoAttribute(),
                       ],
+                      children: (
+                          <>
+                              <ElementJsx.Text>
+                                  {options.label.children}
+                              </ElementJsx.Text>
+                              <ElementJsx.Paragraph
+                                  attributes={[
+                                      width(fill),
+                                      paddingEach({
+                                          top: rem(space.sm),
+                                          right: rem(0),
+                                          bottom: rem(0),
+                                          left: rem(0),
+                                      }),
+                                      Font.size(rem(Rem.scaled(-1))),
+                                      options.errorMessage
+                                          ? errorMessageAttrs(options.theme)
+                                          : Data.NoAttribute(),
+                                  ]}
+                              >
+                                  {options.errorMessage
+                                      ? options.errorMessage
+                                      : options.message
+                                      ? options.message
+                                      : options.message === ''
+                                      ? ''
+                                      : ' '}
+                                  {''}
+                              </ElementJsx.Paragraph>
+                          </>
+                      ),
                   }
                 : options.label,
         onChange: options.onChange ? options.onChange : () => {},
@@ -280,4 +280,4 @@ function customOptions(options: {
     };
 }
 
-export { Radio, RadioRow, RadioField, RadioRowField, Option };
+export { Radio, RadioRow, Option };

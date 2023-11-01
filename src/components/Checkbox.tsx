@@ -1,3 +1,5 @@
+// deno-lint-ignore-file no-explicit-any
+import { StateUpdater, useState } from 'preact/hooks';
 import {
     Data,
     Element,
@@ -21,6 +23,8 @@ import {
     errorMessageAttrs,
     hover,
 } from './Input.tsx';
+import { isString } from '../../../espectro/src/utils/utils.ts';
+import { space } from '../tokens/spacing.ts';
 
 const {
     width,
@@ -38,6 +42,8 @@ const {
     mouseDown,
     mouseOver,
     paddingEach,
+    spacing,
+    rem,
 } = Element;
 
 interface CheckboxArgs {
@@ -187,20 +193,83 @@ function Checkbox({
     );
 }
 
-function CheckboxField({
-    attributes,
+export interface CheckboxRowArgs {
+    device: Responsive.Device;
+    theme: Theming;
+    options: { id?: any | string; name: string }[];
+    selected: [string[], StateUpdater<string[]>];
+    message?: string;
+    errorMessage?: string;
+}
+
+export default function CheckboxRow({
+    theme,
+    device,
     options,
-}: {
-    attributes: Data.Attribute[];
-    options: CheckboxArgs;
-}) {
+    selected,
+    errorMessage,
+}: CheckboxRowArgs) {
+    const options_: {
+        label: string;
+        checked: boolean;
+        onChange: (checked: boolean) => void;
+    }[] = options.map((option) => {
+        const selected_ = selected[0].find((so) => so === option.id);
+        const [checked, setChecked] = useState(selected_ ? true : false);
+        return {
+            label: option.name,
+            checked,
+            onChange: () => {
+                setChecked((ps: boolean) => !ps);
+                selected[1]((ps: string[]) =>
+                    isString(option.id) && ps.includes(option.id)
+                        ? ps.filter((p) => p !== option.id)
+                        : isString(option.id)
+                        ? [...ps, option.id]
+                        : ps
+                );
+            },
+        };
+    });
+    return (
+        <ElementJsx.Row
+            attributes={[centerY, spacing(rem(space.md))]}
+            keys={options.map((option) =>
+                typeof option.id === 'string' ? option.id : ''
+            )}
+        >
+            {options_.map((option) => (
+                <Checkbox
+                    attributes={[]}
+                    options={{
+                        theme,
+                        device,
+                        onChange: option.onChange,
+                        checked: option.checked,
+                        label: InputJsx.labelRight([], option.label),
+                        errorMessage,
+                    }}
+                />
+            ))}
+        </ElementJsx.Row>
+    );
+}
+
+function CheckboxField(options: CheckboxRowArgs) {
     return (
         <Field
             theme={options.theme}
             message={options.message}
             errorMessage={options.errorMessage}
         >
-            <Checkbox attributes={attributes} options={options} />
+            <CheckboxRow
+                theme={options.theme}
+                device={options.device}
+                options={options.options}
+                selected={options.selected}
+                message={options.message}
+                errorMessage={options.errorMessage}
+            />
         </Field>
     );
 }
@@ -220,6 +289,7 @@ function customOptions(options: {
                       ...options.label,
                       attributes: [
                           ...options.label.attributes,
+                          centerY,
                           errorMessageAttrs(options.theme),
                       ],
                   }
@@ -227,15 +297,7 @@ function customOptions(options: {
                 ? {
                       ...options.label,
                       attributes: Responsive.isPhone(options.device)
-                          ? [
-                                ...options.label.attributes,
-                                paddingEach({
-                                    top: 4,
-                                    left: 0,
-                                    bottom: 0,
-                                    right: 0,
-                                }),
-                            ]
+                          ? [...options.label.attributes, centerY]
                           : options.label.attributes,
                   }
                 : options.label,
@@ -243,4 +305,4 @@ function customOptions(options: {
     };
 }
 
-export { Checkbox, DefaultCheckbox, CheckboxField };
+export { Checkbox, DefaultCheckbox, CheckboxRow, CheckboxField };
